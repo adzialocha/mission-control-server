@@ -1,0 +1,196 @@
+/* layout */
+
+.section {
+  padding-bottom: 0;
+}
+
+.header {
+  height: 60px;
+
+  transition: background .5s linear;
+}
+
+.header.warning {
+  background-color: red;
+}
+
+.row {
+  position: absolute;
+
+  top: 60px;
+  bottom: 0;
+
+  width: 100%;
+
+  display: flex;
+}
+
+.cell {
+  position: relative;
+
+  flex: 1 60%;
+
+  height: 100%;
+}
+
+.cell:last-child {
+  flex: 1 40%;
+
+  justify-content: flex-end;
+}
+
+#control label {
+  text-transform: uppercase;
+}
+
+/* network status */
+
+.network-status {
+  padding: 10px;
+
+  color: #999;
+
+  background-color: #111;
+}
+
+/* trigger */
+
+.trigger {
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  padding: 10px;
+
+  background-color: #00ff00;
+
+  opacity: 0;
+
+  text-transform: uppercase;
+
+  transition: opacity 150ms linear;
+}
+
+.trigger.visible {
+  opacity: 1;
+}
+
+/* say input and mute */
+
+.say {
+  position: relative;
+
+  height: 65px;
+}
+
+.say-input,
+.say-mute {
+  position: absolute;
+
+  float: left;
+}
+
+.say-input {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 50px;
+
+  background-color: red;
+
+  text-transform: uppercase;
+
+  transition: background .25s linear;
+}
+
+.say-input:focus {
+  background-color: #333;
+}
+
+.say-mute {
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 50px;
+
+  cursor: pointer;
+}
+
+.say-mute:checked::after {
+  position: relative;
+
+  left: 6px;
+
+  content: 'X';
+
+  font-size: 28px;
+  color: red;
+}
+
+/* pdf view */
+
+.pdf-view {
+  display: none;
+
+  width: auto;
+  height: 100%;
+  max-height: 100%;
+}
+
+.pdf-view.visible {
+  display: block;
+}
+
+/* projection */
+
+.projections-container {
+  font-size: 0;
+}
+
+.projection {
+  width: 33.3%;
+  height: 136px;
+
+  border: 3px solid #333;
+  border-right: none;
+
+  pointer-events: none;
+}
+
+.projection:last-child {
+  border-right: 3px solid #333;
+}
+
+/* info */
+
+.info {
+  padding: 10px;
+
+  color: #666;
+
+  background-color: #111;
+}
+
+.info.primary {
+  color: #999;
+
+  font-weight: bold;
+}
+
+.info.large {
+  font-size: 20px;
+}
+
+/* kill */
+
+.kill-button {
+  opacity: .6;
+}
+
+.kill-button.active {
+  opacity: 1;
+
+  background-color: red;
+}

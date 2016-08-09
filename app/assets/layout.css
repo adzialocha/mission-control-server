@@ -1,0 +1,166 @@
+/* global */
+
+html,
+body {
+  box-sizing: border-box;
+
+  height: 100%;
+
+  color: #fff;
+
+  background-color: #000;
+}
+
+body,
+input {
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+*,
+::before,
+::after {
+  box-sizing: inherit;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+/* forms */
+
+input,
+select {
+  -webkit-appearance: none;
+  appearance: none;
+
+  border-radius: 0;
+}
+
+input,
+select,
+button {
+  margin: 0;
+  padding: 10px;
+
+  font-size: 20px;
+
+  box-shadow: none;
+
+  border: none;
+
+  color: #fff;
+
+  background-color: #222;
+
+  outline: none;
+}
+
+input:hover,
+select:hover,
+button:hover {
+  background-color: #666;
+}
+
+input,
+select {
+  width: 100%;
+
+  padding-bottom: 5px;
+
+  border-bottom: solid 2px #333;
+}
+
+input,
+label,
+select {
+  display: block;
+
+  margin-bottom: 15px;
+}
+
+select {
+  cursor: pointer;
+}
+
+button {
+  text-transform: uppercase;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444;
+}
+
+button[disabled],
+input[disabled],
+select[disabled] {
+  opacity: .5;
+}
+
+label {
+  color: #ddd;
+}
+
+.clear {
+  clear: both;
+}
+
+/* layout */
+
+.wrapper,
+.view {
+  height: 100%;
+
+  overflow: hidden;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.view {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.view.hidden {
+  position: absolute;
+
+  top: 100%;
+}
+
+/* main elements */
+
+.header,
+.section {
+  position: relative;
+
+  padding: 20px;
+}
+
+.header {
+  background-color: #333;
+}

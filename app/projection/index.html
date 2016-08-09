@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>UNM PROJECTION</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="reset-css/reset.css">
+    <link rel="stylesheet" type="text/css" href="layout.css">
+    <link rel="stylesheet" type="text/css" href="projection.css">
+    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/unm.js"></script>
+    <script type="text/javascript" src="scripts/utils.js"></script>
+    <script type="text/javascript" src="scripts/socket.js"></script>
+    <script type="text/javascript" src="scripts/views.js"></script>
+    <script type="text/javascript" src="scripts/info.js"></script>
+    <script type="text/javascript" src="scripts/network.js"></script>
+    <script type="text/javascript" src="scripts/projection.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
+  </head>
+  <body>
+    <video id="cache-video" muted></video>
+    <div class="wrapper">
+      <div class="view projection" id="projection">
+        <div class="projection-image" id="image"></div>
+        <div class="projection-video">
+          <video id="video" autobuffer loop></video>
+        </div>
+        <div class="projection-ask"></div>
+        <div class="projection-type"></div>
+      </div>
+      <div class="view" id="settings">
+        <div class="header">
+          <h1>Settings</h1>
+        </div>
+        <div class="section">
+          <form id="server-settings">
+            <label>Video muted</label>
+            <select id="muted">
+              <option value="no">Normal</option>
+              <option value="yes">Muted</option>
+            </select>
+            <label>Projection ID</label>
+            <select id="participant-id">
+              <option value="0">#0</option>
+              <option value="1">#1</option>
+              <option value="2">#2</option>
+            </select>
+            <label>Websocket Address</label>
+            <input type="text" value="127.0.0.1" id="ws-address">
+            <label>Port</label>
+            <input type="text" value="8000" id="ws-port">
+            <button id="connect">Connect</button>
+            <button id="disconnect">Disconnect</button>
+          </form>
+        </div>
+        <div class="section">
+          <label>Network status</label>
+          <div class="network-status" id="network-status">Standby.</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

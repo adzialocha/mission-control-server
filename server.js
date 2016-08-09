@@ -235,7 +235,7 @@ function _delegate(sMessage) {
 
   receiver = address[1]
 
-  if ([ALL, CONTROL, PROJECTION, AUDIENCE].includes(receiver)) {
+  if (! [ALL, CONTROL, PROJECTION].includes(receiver)) {
     _log('MESSAGE FORMAT ERROR: UNKNOWN RECEIVER')
     return false
   }

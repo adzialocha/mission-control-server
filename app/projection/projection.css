@@ -1,0 +1,145 @@
+.projection {
+  display: flex;
+
+  align-items: center;
+
+  transition: background .5s linera;
+}
+
+.projection-video,
+.projection-image,
+.projection-type,
+.projection-ask {
+  position: absolute;
+
+  display: none;
+
+  flex: 1 100%;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.projection.video-mode .projection-video {
+  display: block;
+}
+
+.projection.image-mode .projection-image {
+  display: block;
+}
+
+.projection-type,
+.projection-ask {
+  display: block;
+}
+
+.projection.warning {
+  background-color: red;
+}
+
+.projection.warning .projection-video {
+  display: none;
+}
+
+.projection.warning .projection-image {
+  display: none;
+}
+
+.projection.type .projection-image {
+  display: none;
+}
+
+.projection.ask .projection-image {
+  display: none;
+}
+
+.projection-video {
+  position: relative;
+
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+
+  height: 0;
+}
+
+.projection-video video {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.projection-image {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.projection-type,
+.projection-ask {
+  padding: 40px;
+
+  font-size: 60px;
+
+  text-transform: uppercase;
+
+  opacity: 1;
+
+  transition: opacity 1s ease-out;
+}
+
+.projection-type.inactive,
+.projection-ask.inactive {
+  opacity: 0;
+}
+
+.projection-ask {
+  top: initial;
+  bottom: 0;
+}
+
+.projection-ask::after {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 33.3%;
+
+  content: '\A';
+
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* preview size */
+
+@media (max-width: 300px) {
+
+  .projection-type,
+  .projection-ask {
+    font-size: 11px;
+
+    padding: 10px;
+  }
+
+}
+
+/* cache video */
+
+#cache-video {
+  position: absolute;
+
+  top: -100%;
+  left: -100%;
+
+  width: 50px;
+  height: 50px;
+}

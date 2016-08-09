@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>UNM MISSION CONTROL</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="reset-css/reset.css">
+    <link rel="stylesheet" type="text/css" href="layout.css">
+    <link rel="stylesheet" type="text/css" href="control.css">
+    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="pdfjs-dist/build/pdf.combined.js"></script>
+    <script type="text/javascript" src="scripts/unm.js"></script>
+    <script type="text/javascript" src="scripts/utils.js"></script>
+    <script type="text/javascript" src="scripts/socket.js"></script>
+    <script type="text/javascript" src="scripts/views.js"></script>
+    <script type="text/javascript" src="scripts/info.js"></script>
+    <script type="text/javascript" src="scripts/network.js"></script>
+    <script type="text/javascript" src="scripts/control.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/pdf.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="view" id="control">
+        <div class="header">
+          <h1>Mission Control</h1>
+          <div class="trigger" id="trigger">Trigger</div>
+        </div>
+        <div class="row">
+          <div class="cell">
+            <div class="section">
+              <label id="say-title">Say</label>
+              <div class="say">
+                <input type="text" id="say-text" class="say-input">
+                <input type="checkbox" id="say-muted" class="say-mute">
+              </div>
+            </div>
+            <div class="section">
+              <label>Projection</label>
+              <div class="projections-container">
+                <iframe class="projection"></iframe>
+                <iframe class="projection"></iframe>
+                <iframe class="projection"></iframe>
+              </div>
+            </div>
+            <div class="section">
+              <label>Scenes</label>
+              <div class="info primary" id="current-scene"></div>
+              <div class="info" id="next-scene"></div>
+            </div>
+            <div class="section">
+              <label>Time</label>
+              <div class="info primary large" id="current-scene-time"></div>
+              <div class="info" id="current-time"></div>
+            </div>
+            <div class="section">
+              <label>App</label>
+              <button class="kill-button" id="kill">Kill</button>
+            </div>
+          </div>
+          <div class="cell">
+            <canvas class="pdf-view" id="pdf-view"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="view" id="settings">
+        <div class="header">
+          <h1>Settings</h1>
+        </div>
+        <div class="section">
+          <form id="server-settings">
+            <label>Participant ID</label>
+            <select id="participant-id">
+              <option value="0">#0</option>
+              <option value="1">#1</option>
+              <option value="2">#2</option>
+            </select>
+            <label>Websocket Address</label>
+            <input type="text" value="127.0.0.1" id="ws-address">
+            <label>Port</label>
+            <input type="text" value="8000" id="ws-port">
+            <button id="connect">Connect</button>
+            <button id="disconnect">Disconnect</button>
+          </form>
+        </div>
+        <div class="section">
+          <label>Network status</label>
+          <div class="network-status" id="network-status">Standby.</div>
+        </div>
+        <div class="section">
+          <label>PDF file</label>
+          <select id="pdf-selector">
+            <option value="">Select a file</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
