@@ -1,0 +1,14 @@
+[
+  {
+    "title": "EXAMPLE",
+    "0": { "image": "black.png" },
+    "1": { "video": "test.mov" },
+    "2": { "image": "black.png" }
+  },
+  {
+    "title": "ANOTHER EXAMLE",
+    "0": { "video": "example.mp4" },
+    "1": { "image": "hello.gif" },
+    "2": { "video": "example.mp4" }
+  }
+]

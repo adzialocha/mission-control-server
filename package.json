@@ -1,0 +1,23 @@
+{
+  "name": "mission-control-server",
+  "version": "0.2.0",
+  "description": "Intermedial BLATT 3000 lecture at UNM Festival 2016, Aarhus",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marmorkuchen-net/mission-control-server.git"
+  },
+  "author": "Andreas Dzialocha",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/marmorkuchen-net/mission-control-server/issues"
+  },
+  "homepage": "https://www.blatt3000.de",
+  "dependencies": {
+    "connect": "^3.4.1",
+    "ip": "^1.1.3",
+    "peertalk": "^1.0.2",
+    "serve-static": "^1.10.1",
+    "ws": "^1.1.1"
+  }
+}
