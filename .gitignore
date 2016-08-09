@@ -4,6 +4,7 @@ bower_components
 node_modules
 
 logs/*
+log.txt
 
 score/score.json
 score/videos/*

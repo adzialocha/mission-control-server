@@ -14,6 +14,7 @@ const MEDIA_FOLDER = 'media'
 const VENDOR_FOLDER = 'bower_components'
 const COMMON_FOLDER = 'assets'
 const PDF_FOLDER = 'pdfs'
+const LOGS_FOLDER = 'logs'
 
 const SCORE_PATH = SCORE_FOLDER + '/score.json'
 
@@ -68,7 +69,7 @@ function _log(sMessage) {
 
   console.log(msg)
 
-  fs.appendFile('log.txt', msg + '\n')
+  fs.appendFile(LOGS_FOLDER + '/log.txt', msg + '\n')
 }
 
 function _getPDFFiles() {
