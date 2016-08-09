@@ -11,7 +11,6 @@
   var _isRendering;
 
   function _show(ePageIndex) {
-
     if (! _document || _isRendering || ePageIndex === _current) {
       return false;
     }
@@ -19,7 +18,6 @@
     _current = ePageIndex;
 
     _document.getPage(ePageIndex).then(function(ePdfPage) {
-
       var viewport, canvas, context, render;
 
       viewport = ePdfPage.getViewport(SCALE);
@@ -39,9 +37,7 @@
       render.promise.then(function () {
         _isRendering = false;
       });
-
     });
-
   }
 
   // public

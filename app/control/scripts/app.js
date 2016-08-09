@@ -50,7 +50,6 @@
   }
 
   function _updateTimer() {
-
     if (! _isTimeActive) {
       return false;
     }
@@ -60,11 +59,9 @@
 
     $('#current-time').html(UNM.utils.getTime(_time));
     $('#current-scene-time').html(UNM.utils.getTime(_timeScene));
-
   }
 
   function _startTimer() {
-
     _timeScene = -1;
 
     if (! _isTimeActive) {
@@ -73,7 +70,6 @@
     }
 
     _updateTimer();
-
   }
 
   function _trigger() {
@@ -98,9 +94,6 @@
   // ready
 
   $(document).ready(function() {
-
-    // initialize
-
     UNM.views.initialize();
     UNM.pdf.initialize();
 
@@ -190,7 +183,6 @@
     });
 
     $(document).on('keydown', function($event) {
-
       // reset
 
       if ($event.keyCode === 48 && $event.altKey) {
@@ -253,7 +245,6 @@
           return true;
         }
       }
-
     });
 
     $('#say-text').on('input', function() {
@@ -271,7 +262,6 @@
       }
       $('#say-title').html(str);
     });
-
   });
 
 })(window, window.jQuery, window.UNM);

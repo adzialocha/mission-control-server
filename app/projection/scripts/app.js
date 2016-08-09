@@ -7,7 +7,6 @@
   var _id, _listeners, _isRemote;
 
   function _register() {
-
     _listeners.image = function($event) {
       UNM.projection.image($event.args[0], $event.args[1]);
     };
@@ -31,16 +30,13 @@
     };
 
     UNM.network.on('/unm/projection/' + _id + '/ask', _listeners.ask);
-
   }
 
   function _unregister() {
-
     UNM.network.off('/unm/projection/' + _id + '/image', _listeners.image);
     UNM.network.off('/unm/projection/' + _id + '/video', _listeners.video);
     UNM.network.off('/unm/projection/' + _id + '/type', _listeners.type);
     UNM.network.off('/unm/projection/' + _id + '/ask', _listeners.ask);
-
   }
 
   function _setSettingsDisabled(eDisabledState) {
@@ -87,7 +83,6 @@
   // ready
 
   $(document).ready(function() {
-
     _listeners = {};
     _isRemote = false;
 
@@ -110,7 +105,6 @@
     // get info
 
     UNM.info.get(function(eServerInfo) {
-
       var matches;
 
       // get info from server
@@ -128,7 +122,6 @@
         UNM.projection.mute(true);
         _isRemote = true;
       }
-
     });
 
     // settings events
@@ -144,7 +137,6 @@
       $event.preventDefault();
       UNM.network.disconnect();
     });
-
   });
 
 })(window, window.jQuery, window.UNM);
