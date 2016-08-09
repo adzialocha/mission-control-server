@@ -206,7 +206,15 @@ function _listenHttp(sName, sPort) {
   httpServer[sName].use(serveStatic([__dirname, VENDOR_FOLDER].join('/')))
 
   if (sName === PROJECTION) {
-    httpServer[sName].use(serveStatic([__dirname, SCORE_FOLDER, MEDIA_FOLDER].join('/')))
+    httpServer[sName].use(
+      serveStatic(
+        [__dirname, SCORE_FOLDER, MEDIA_FOLDER].join('/'), {
+          'setHeaders': (res) => {
+            res.setHeader('Content-Encoding', '.')
+          }
+        }
+      )
+    )
   }
 
   if (sName === CONTROL) {
