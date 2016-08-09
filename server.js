@@ -35,7 +35,7 @@ const SYNCHRONIZATION_DELAY = 50
 
 let clients
 
-let score, index
+let score, scoreIndex
 
 let httpServer = {}
 
@@ -49,27 +49,20 @@ let isAppKilled
 
 // log
 
+function _format(sNumber) {
+  return (sNumber < 10 ? '0' : '') + sNumber
+}
+
 function _log(sMessage) {
-  let msg, date, hour, min, sec, time
+  const now = new Date()
+  const time = _format(now.getHours()) + ':' + _format(now.getMinutes()) + ':' + _format(now.getSeconds())
 
-  date = new Date()
-
-  hour = date.getHours()
-  hour = (hour < 10 ? '0' : '') + hour
-
-  min  = date.getMinutes()
-  min = (min < 10 ? '0' : '') + min
-
-  sec  = date.getSeconds()
-  sec = (sec < 10 ? '0' : '') + sec
-
-  time = hour + ':' + min + ':' + sec
-
-  msg = time + ' - ' + sMessage
+  const msg = time + ' - ' + sMessage
+  const date = `${now.getFullYear()}${now.getMonth()}${now.getDay()}`
 
   console.log(msg)
 
-  fs.appendFile(LOGS_FOLDER + '/log.txt', msg + '\n')
+  fs.appendFile([LOGS_FOLDER, `log_${date}.txt`].join('/'), `${msg}\n`)
 }
 
 function _getPDFFiles() {
@@ -77,7 +70,7 @@ function _getPDFFiles() {
   files = []
   dir = fs.readdirSync([__dirname, SCORE_FOLDER, PDF_FOLDER].join('/'))
   for (let i in dir){
-    if (dir[i].indexOf('.pdf') > -1) {
+    if (dir[i].includes('.pdf')) {
       files.push(dir[i])
     }
   }
@@ -85,9 +78,9 @@ function _getPDFFiles() {
 }
 
 function _scene() {
-  let i, scene, sceneNext, messages, nextSceneIndex
+  let i, scene, sceneNext, messages, nextScenescoreIndex
 
-  scene = score[index]
+  scene = score[scoreIndex]
   messages = []
 
   for (i = 0; i < 3; i++) {
@@ -99,38 +92,38 @@ function _scene() {
     })
   }
 
-  if (index + 1 > score.length - 1) {
-    nextSceneIndex = 0
+  if (scoreIndex + 1 > score.length - 1) {
+    nextScenescoreIndex = 0
   } else {
-    nextSceneIndex = index + 1
+    nextScenescoreIndex = scoreIndex + 1
   }
 
-  sceneNext = score[nextSceneIndex]
+  sceneNext = score[nextScenescoreIndex]
 
   messages.push({
     address: [CONTROL, 'info'],
-    args: ['#' + index + ' ' + scene.title, '#' + nextSceneIndex + ' ' + sceneNext.title]
+    args: ['#' + scoreIndex + ' ' + scene.title, '#' + nextScenescoreIndex + ' ' + sceneNext.title]
   })
 
-  _log('SCENE #' + index + ' ' + scene.title)
+  _log('SCENE #' + scoreIndex + ' ' + scene.title)
   _broadcast(messages)
 }
 
 function _trigger() {
-  index++
+  scoreIndex++
 
-  if (index > score.length - 1) {
-    index = 0
+  if (scoreIndex > score.length - 1) {
+    scoreIndex = 0
   }
 
   _scene()
 }
 
 function _undo() {
-  index--
+  scoreIndex--
 
-  if (index < 0) {
-    index = score.length - 1
+  if (scoreIndex < 0) {
+    scoreIndex = score.length - 1
   }
 
   _scene()
@@ -139,7 +132,7 @@ function _undo() {
 function _reset() {
   _read(SCORE_PATH)
 
-  index = -1
+  scoreIndex = -1
   isAppKilled = false
 
   _broadcast([{
@@ -242,7 +235,7 @@ function _delegate(sMessage) {
 
   receiver = address[1]
 
-  if ([ALL, CONTROL, PROJECTION, AUDIENCE].indexOf(receiver) === -1) {
+  if ([ALL, CONTROL, PROJECTION, AUDIENCE].includes(receiver)) {
     _log('MESSAGE FORMAT ERROR: UNKNOWN RECEIVER')
     return false
   }
@@ -268,8 +261,6 @@ function _delegate(sMessage) {
     if (sMessage.args.length === 2) {
       _type(sMessage.args[0], sMessage.args[1])
     }
-  } else if (command === 'kill') {
-    _kill()
   }
 }
 
@@ -307,7 +298,7 @@ function _read(sFilePath) {
   fs.readFile([__dirname, sFilePath].join('/'), 'utf8', (eError, eData) => {
     if (eError) throw eError
     score = JSON.parse(eData)
-    _log(`READ SCORE. OK (SCENES=${ score.length}')`)
+    _log(`READ SCORE. OK (SCENES=${ score.length})`)
   })
 }
 

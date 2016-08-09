@@ -3,10 +3,9 @@ npm-debug.log
 bower_components
 node_modules
 
-logs/*
-log.txt
+logs/*.txt
 
 score/score.json
-score/videos/*
-score/images/*
-score/pdfs/*
+score/media/videos/*
+score/media/images/*
+score/pdfs/*.pdf
