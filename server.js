@@ -5,8 +5,12 @@ const fs = require('fs')
 const ip = require('ip')
 const child_process = require('child_process')
 const PeerTalk = require('peertalk')
+const firebase = require("firebase");
 
 // constants
+
+const FIREBASE_SERVICE_FILE = 'firebase.json'
+const FIREBASE_DATABASE_URL = 'https://blatt-3000-mission-control.firebaseio.com'
 
 const STATIC_FOLDER = 'app'
 const SCORE_FOLDER = 'score'
@@ -42,6 +46,8 @@ let httpServer = {}
 let wsServer
 
 let usb
+
+let startupTimestamp
 
 // performance
 
@@ -148,11 +154,11 @@ function _say(eMessage, eIsMuted) {
 }
 
 function _ask(eMessage) {
-  // _say(eMessage, isAppKilled)
-  // _broadcast([{
-  //   address: [ PROJECTION, Math.floor(Math.random() * 3), 'ask' ],
-  //   args: [ eMessage ]
-  // }])
+  _say(eMessage, isAppKilled)
+  _broadcast([{
+    address: [ PROJECTION, Math.floor(Math.random() * 3), 'ask' ],
+    args: [ eMessage ]
+  }])
 }
 
 function _type(eProjectionId, eMessage) {
@@ -303,6 +309,8 @@ function _read(sFilePath) {
 }
 
 function _init() {
+  startupTimestamp = new Date().toISOString()
+
   _log('UNM <3000')
   _log(new Date().toUTCString())
   _log(`IP=${ip.address()}`)
@@ -324,14 +332,18 @@ function _init() {
 
   clients = 0
 
-  // start PeerTalk
+  // hook into firebase
 
-  usb = new PeerTalk()
+  firebase.initializeApp({
+    databaseURL: FIREBASE_DATABASE_URL,
+    serviceAccount: FIREBASE_SERVICE_FILE,
+  })
 
-  usb.then((device) => {
-    device.on('data', function(data) {
-      console.log(data)
-    })
+  firebase.database().ref('questions').on('child_added', (eSnapshot) => {
+    const question = eSnapshot.val()
+    if (question.timestamp > startupTimestamp) {
+      _ask(question.message)
+    }
   })
 }
 

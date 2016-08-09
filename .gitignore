@@ -5,6 +5,8 @@ node_modules
 
 logs/*.txt
 
+firebase.json
+
 score/score.json
 score/media/videos/*
 score/media/images/*

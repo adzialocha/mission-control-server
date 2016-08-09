@@ -182,15 +182,3 @@
 .info.large {
   font-size: 20px;
 }
-
-/* kill */
-
-.kill-button {
-  opacity: .6;
-}
-
-.kill-button.active {
-  opacity: 1;
-
-  background-color: red;
-}
