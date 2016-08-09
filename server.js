@@ -58,7 +58,7 @@ function _log(sMessage) {
   const time = _format(now.getHours()) + ':' + _format(now.getMinutes()) + ':' + _format(now.getSeconds())
 
   const msg = time + ' - ' + sMessage
-  const date = `${now.getFullYear()}${now.getMonth()}${now.getDay()}`
+  const date = `${now.getFullYear()}${now.getMonth() + 1}${now.getDate()}`
 
   console.log(msg)
 
