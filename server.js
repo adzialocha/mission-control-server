@@ -208,7 +208,7 @@ function _listenHttp(sName, sPort) {
   if (sName === PROJECTION) {
     httpServer[sName].use(
       serveStatic(
-        [__dirname, SCORE_FOLDER, MEDIA_FOLDER].join('/'), {
+        [__dirname, SCORE_FOLDER, MEDIA_FOLDER].join('/') , {
           'setHeaders': (res) => {
             res.setHeader('Content-Encoding', '.')
           }
