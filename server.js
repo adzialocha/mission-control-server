@@ -4,13 +4,10 @@ const ws = require('ws')
 const fs = require('fs')
 const ip = require('ip')
 const child_process = require('child_process')
-const PeerTalk = require('peertalk')
-const firebase = require("firebase");
+const usbmux = require('usbmux')
+const bufferpack = require('bufferpack')
 
 // constants
-
-const FIREBASE_SERVICE_FILE = 'firebase.json'
-const FIREBASE_DATABASE_URL = 'https://blatt-3000-mission-control.firebaseio.com'
 
 const STATIC_FOLDER = 'app'
 const SCORE_FOLDER = 'score'
@@ -28,6 +25,9 @@ const HTTP_SERVER_PORT_CONTROL = 3000
 const HTTP_SERVER_PORT_PROJECTION = 4000
 
 const WEBSOCKET_SERVER_PORT = 9000
+
+const PEERTALK_PORT = 2345
+const PEERTALK_OFFSET = 20
 
 const ALL = 'all'
 const PROJECTION = 'projection'
@@ -49,10 +49,6 @@ let usb
 
 let startupTimestamp
 
-// performance
-
-let isAppKilled
-
 // log
 
 function _format(sNumber) {
@@ -70,6 +66,8 @@ function _log(sMessage) {
 
   fs.appendFile([LOGS_FOLDER, `log_${date}.txt`].join('/'), `${msg}\n`)
 }
+
+// mission control server
 
 function _getPDFFiles() {
   let files, dir
@@ -139,14 +137,13 @@ function _reset() {
   _read(SCORE_PATH)
 
   scoreIndex = -1
-  isAppKilled = false
 
   _broadcast([{
     address: [ 'reset' ]
   }])
 }
 
-function _say(eMessage, eIsMuted) {
+function _say(eMessage, eIsMuted = false) {
   if (! eIsMuted) {
     child_process.exec('say ' + eMessage, function() {})
   }
@@ -154,7 +151,7 @@ function _say(eMessage, eIsMuted) {
 }
 
 function _ask(eMessage) {
-  _say(eMessage, isAppKilled)
+  _say(eMessage)
   _broadcast([{
     address: [ PROJECTION, Math.floor(Math.random() * 3), 'ask' ],
     args: [ eMessage ]
@@ -166,10 +163,6 @@ function _type(eProjectionId, eMessage) {
     address: [ PROJECTION, eProjectionId, 'type' ],
     args: [ eMessage ]
   }])
-}
-
-function _kill() {
-  isAppKilled = true
 }
 
 function _mute(eProjectionId, eStatus) {
@@ -196,7 +189,6 @@ function _listenHttp(sName, sPort) {
     res.end(JSON.stringify({
       address: ip.address(),
       port: WEBSOCKET_SERVER_PORT,
-      kill: isAppKilled,
       pdfs: _getPDFFiles()
     }))
   })
@@ -340,19 +332,32 @@ function _init() {
 
   clients = 0
 
-  // hook into firebase
+  // listen to usb connection
 
-  firebase.initializeApp({
-    databaseURL: FIREBASE_DATABASE_URL,
-    serviceAccount: FIREBASE_SERVICE_FILE,
-  })
+  new usbmux.createListener()
+    .on('error', function(err) {
+      _log(`USB ERROR ${err}`)
+    })
+    .on('attached', function(udid) {
+      _log(`USB DEVICE CONNECTED (DEVICE_ID=${udid})`)
 
-  firebase.database().ref('questions').on('child_added', (eSnapshot) => {
-    const question = eSnapshot.val()
-    if (question.timestamp > startupTimestamp) {
-      _ask(question.message)
-    }
-  })
+      usbmux.getTunnel(PEERTALK_PORT, { udid }).then((tunnel) => {
+        tunnel.on('data', (data) => {
+          const payload = data.toString().slice(PEERTALK_OFFSET)
+          try {
+            const json = JSON.parse(payload)
+            if (json.timestamp > startupTimestamp) {
+              _ask(json.message)
+            }
+          } catch (e) {
+            _log(`UNKNOWN USB DATA (DATA=${payload})`)
+          }
+        })
+      })
+    })
+    .on('detached', function(udid) {
+      _log(`USB DEVICE DISCONNECTED (DEVICE_ID=${udid})`)
+    })
 }
 
 function _broadcast(sMessages) {
